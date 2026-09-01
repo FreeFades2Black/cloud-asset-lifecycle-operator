@@ -19,7 +19,7 @@ from src.operator.iam_auditor import IAMHygieneAuditor
 
 app = typer.Typer(
     name="cert-guard",
-    help="⚡ Automated Certificate & Cloud Asset Lifecycle Operator — Multi-Cloud FinOps & Security Hygiene",
+    help="[+] Automated Certificate & Cloud Asset Lifecycle Operator -- Multi-Cloud FinOps & Security Hygiene",
     add_completion=False
 )
 
@@ -37,7 +37,7 @@ def audit_certs(
         typer.echo(json.dumps(results, indent=2))
         return
 
-    typer.echo("\n🔒 [TLS / SSL CERTIFICATE LIFECYCLE AUDIT REPORT]")
+    typer.echo("\n[TLS / SSL CERTIFICATE LIFECYCLE AUDIT REPORT]")
     typer.echo("=" * 95)
     typer.echo(f"{'Domain / ARN':<38} {'Days Left':<12} {'Status':<25} {'Issuer':<20}")
     typer.echo("-" * 95)
@@ -60,7 +60,7 @@ def scan_orphans(
         typer.echo(json.dumps(report, indent=2))
         return
 
-    typer.echo("\n💸 [ORPHANED CLOUD ASSETS & FINOPS AUDIT REPORT]")
+    typer.echo("\n[ORPHANED CLOUD ASSETS & FINOPS AUDIT REPORT]")
     typer.echo("=" * 85)
     typer.echo(f"Estimated Monthly Cloud Waste: ${report['estimated_monthly_waste_usd']} USD / Month")
     typer.echo(f"Estimated Annual Cloud Waste:  ${report['estimated_annual_waste_usd']} USD / Year")
@@ -86,7 +86,7 @@ def iam_hygiene():
     auditor = IAMHygieneAuditor()
     report = auditor.audit_simulated_iam_posture()
 
-    typer.echo("\n🔑 [IAM CREDENTIAL HYGIENE & SECRET ROTATION AUDIT]")
+    typer.echo("\n[IAM CREDENTIAL HYGIENE & SECRET ROTATION AUDIT]")
     typer.echo("=" * 85)
     typer.echo(f"Total Users Audited: {report['total_users_audited']} | Stale Keys (>90d): {report['stale_access_keys_count']} | Missing MFA: {report['missing_mfa_count']}")
     typer.echo("-" * 85)
@@ -117,7 +117,7 @@ def full_dossier(
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(full_report, f, indent=2)
 
-    typer.echo(f"✅ Full Cloud Asset Lifecycle Dossier exported successfully to: {output_file}")
+    typer.echo(f"[OK] Full Cloud Asset Lifecycle Dossier exported successfully to: {output_file}")
 
 
 if __name__ == "__main__":
