@@ -1,0 +1,37 @@
+name: "Scheduled Cloud Fleet Health Audit"
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # Runs daily at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  audit_and_badge:
+    name: "Audit Fleet & Update Badge"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Code"
+        uses: actions/checkout@v4
+
+      - name: "Setup Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: "Install Dependencies"
+        run: pip install typer boto3
+
+      - name: "Run Full Asset Audit"
+        run: |
+          python -m src.operator.cli full-dossier --output-file=data/latest_fleet_audit.json
+
+      - name: "Commit & Push Live Audit Telemetry"
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action [Asset Operator]"
+          mkdir -p data/
+          git add data/
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore(audit): automated daily fleet audit telemetry [skip ci]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

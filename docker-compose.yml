@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  localstack:
+    image: localstack/localstack:3.0
+    container_name: cert_guard_localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=acm,ec2,iam,sts
+      - AWS_DEFAULT_REGION=us-east-1
+
+  cert-guard:
+    build: .
+    container_name: cert_guard_cli
+    depends_on:
+      - localstack
+    environment:
+      - AWS_ENDPOINT_URL=http://localstack:4566
+    command: ["python", "-m", "src.operator.cli", "full-dossier"]

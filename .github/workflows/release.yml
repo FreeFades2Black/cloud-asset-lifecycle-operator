@@ -1,0 +1,38 @@
+name: "Release Packaging & PyInstaller Binary Build"
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+jobs:
+  build_binaries:
+    name: "Build CLI Binaries"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: "Checkout Code"
+        uses: actions/checkout@v4
+
+      - name: "Setup Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: "Install Build Tools"
+        run: |
+          pip install pyinstaller typer boto3
+
+      - name: "Build Executable"
+        run: |
+          pyinstaller --onefile --name cert-guard src/operator/cli.py
+
+      - name: "Upload Release Binary"
+        uses: actions/upload-artifact@v4
+        with:
+          name: cert-guard-${{ matrix.os }}
+          path: dist/*
