@@ -1,0 +1,174 @@
+{
+  "audit_timestamp_utc": "2026-09-10T15:14:54.470521+00:00",
+  "tls_certificates": [
+    {
+      "resource_id": "legacy-vpn.defense.internal",
+      "issuer": "Self-Signed Legacy CA",
+      "expiration_date": "2026-09-07T15:14:54.470536+00:00",
+      "days_remaining": -4,
+      "lifecycle_status": "EXPIRED",
+      "urgency_level": "CRITICAL",
+      "subject_alternative_names": [
+        "legacy-vpn.defense.internal"
+      ]
+    },
+    {
+      "resource_id": "telemetry.bmw-spartanburg.internal",
+      "issuer": "Internal Vault Enterprise CA",
+      "expiration_date": "2026-09-14T15:14:54.470536+00:00",
+      "days_remaining": 3,
+      "lifecycle_status": "CRITICAL_ACTION_REQUIRED",
+      "urgency_level": "CRITICAL",
+      "subject_alternative_names": [
+        "telemetry.bmw-spartanburg.internal"
+      ]
+    },
+    {
+      "resource_id": "api.worldacceptance.com",
+      "issuer": "Amazon ACM (Auto-Renew Failed)",
+      "expiration_date": "2026-09-18T15:14:54.470536+00:00",
+      "days_remaining": 7,
+      "lifecycle_status": "CRITICAL_ACTION_REQUIRED",
+      "urgency_level": "CRITICAL",
+      "subject_alternative_names": [
+        "api.worldacceptance.com",
+        "*.api.worldacceptance.com"
+      ]
+    },
+    {
+      "resource_id": "auth.tdsynnex.com",
+      "issuer": "DigiCert Global Root G2",
+      "expiration_date": "2026-10-02T15:14:54.470536+00:00",
+      "days_remaining": 21,
+      "lifecycle_status": "EXPIRING_SOON",
+      "urgency_level": "WARNING",
+      "subject_alternative_names": [
+        "auth.tdsynnex.com"
+      ]
+    },
+    {
+      "resource_id": "portal.mobility.michelin.com",
+      "issuer": "Let's Encrypt Authority X3",
+      "expiration_date": "2027-01-28T15:14:54.470536+00:00",
+      "days_remaining": 139,
+      "lifecycle_status": "HEALTHY",
+      "urgency_level": "LOW",
+      "subject_alternative_names": [
+        "portal.mobility.michelin.com"
+      ]
+    },
+    {
+      "resource_id": "scada.ge-vernova.power.net",
+      "issuer": "Sectigo Enterprise SSL",
+      "expiration_date": "2027-07-27T15:14:54.470536+00:00",
+      "days_remaining": 319,
+      "lifecycle_status": "HEALTHY",
+      "urgency_level": "LOW",
+      "subject_alternative_names": [
+        "scada.ge-vernova.power.net"
+      ]
+    }
+  ],
+  "orphaned_assets": {
+    "total_orphaned_assets": 7,
+    "estimated_monthly_waste_usd": 175.6,
+    "estimated_annual_waste_usd": 2107.2,
+    "orphaned_ebs_volumes": [
+      {
+        "volume_id": "vol-0a8819f8e71b29",
+        "size_gb": 500,
+        "type": "gp3",
+        "created_days_ago": 65,
+        "last_attached_instance": "i-0991823dead (Terminated)",
+        "monthly_cost_usd": 40.0
+      },
+      {
+        "volume_id": "vol-03b901fc812a14",
+        "size_gb": 1000,
+        "type": "gp3",
+        "created_days_ago": 120,
+        "last_attached_instance": "i-0881726a11 (Terminated)",
+        "monthly_cost_usd": 80.0
+      },
+      {
+        "volume_id": "vol-0dfa8829103e91",
+        "size_gb": 200,
+        "type": "gp3",
+        "created_days_ago": 45,
+        "last_attached_instance": "None (Snapshot Restore)",
+        "monthly_cost_usd": 16.0
+      }
+    ],
+    "unassociated_elastic_ips": [
+      {
+        "ip_address": "54.210.89.12",
+        "allocation_id": "eipalloc-019283f",
+        "association_id": null,
+        "idle_days": 42,
+        "monthly_cost_usd": 3.6
+      },
+      {
+        "ip_address": "3.88.192.45",
+        "allocation_id": "eipalloc-098231a",
+        "association_id": null,
+        "idle_days": 18,
+        "monthly_cost_usd": 3.6
+      }
+    ],
+    "idle_nat_gateways": [
+      {
+        "nat_gateway_id": "nat-09817263b",
+        "vpc_id": "vpc-019283a (Dev Sandbox)",
+        "active_connections": 0,
+        "monthly_cost_usd": 32.4
+      }
+    ],
+    "unreferenced_security_groups": [
+      {
+        "group_id": "sg-0918237192",
+        "group_name": "legacy-dev-db-access",
+        "network_interfaces_attached": 0,
+        "status": "STALE_ORPHAN"
+      }
+    ]
+  },
+  "iam_hygiene": {
+    "total_users_audited": 4,
+    "stale_access_keys_count": 2,
+    "missing_mfa_count": 0,
+    "credential_audit_records": [
+      {
+        "username": "svc-ci-deployer",
+        "access_key_id": "AKIAIOSFODNN7EXAMPLE",
+        "key_age_days": 142,
+        "status": "NON_COMPLIANT_ROTATION_REQUIRED",
+        "mfa_enabled": false,
+        "last_used_days_ago": 1
+      },
+      {
+        "username": "j.doe-contractor",
+        "access_key_id": "AKIAV991823EXAMPLE",
+        "key_age_days": 210,
+        "status": "DORMANT_KEY_REVOCATION_REQUIRED",
+        "mfa_enabled": true,
+        "last_used_days_ago": 95
+      },
+      {
+        "username": "svc-databricks-lakehouse",
+        "access_key_id": "AKIA338192EXAMPLE",
+        "key_age_days": 45,
+        "status": "HEALTHY",
+        "mfa_enabled": false,
+        "last_used_days_ago": 0
+      },
+      {
+        "username": "root-account",
+        "access_key_id": "None (Console Only)",
+        "key_age_days": 0,
+        "status": "HEALTHY",
+        "mfa_enabled": true,
+        "last_used_days_ago": 30
+      }
+    ]
+  }
+}
