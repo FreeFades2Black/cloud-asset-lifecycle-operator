@@ -4,7 +4,7 @@ Orphaned Cloud Resource Discovery & FinOps Waste Estimator.
 Detects unattached EBS volumes, unassociated Elastic IPs, and orphaned NAT gateways.
 """
 
-from typing import Dict, List, Any
+from typing import Any
 
 
 class OrphanResourceScanner:
@@ -16,7 +16,7 @@ class OrphanResourceScanner:
     IDLE_NAT_GATEWAY_MONTH = 32.40
     UNUSED_ALB_MONTH = 22.50
 
-    def scan_simulated_fleet(self) -> Dict[str, Any]:
+    def scan_simulated_fleet(self) -> dict[str, Any]:
         """Scans multi-account resources and isolates orphaned assets."""
         orphaned_ebs = [
             {"volume_id": "vol-0a8819f8e71b29", "size_gb": 500, "type": "gp3", "created_days_ago": 65, "last_attached_instance": "i-0991823dead (Terminated)", "monthly_cost_usd": round(500 * self.EBS_GP3_GB_MONTH, 2)},
