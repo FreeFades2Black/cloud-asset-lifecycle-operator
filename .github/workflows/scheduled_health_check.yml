@@ -5,13 +5,21 @@ on:
     - cron: "0 6 * * *" # Runs daily at 06:00 UTC
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   audit_and_badge:
     name: "Audit Fleet & Update Badge"
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: "Setup Python"
         uses: actions/setup-python@v5
@@ -23,6 +31,7 @@ jobs:
 
       - name: "Run Full Asset Audit"
         run: |
+          mkdir -p data/
           python -m src.operator.cli full-dossier --output-file=data/latest_fleet_audit.json
 
       - name: "Commit & Push Live Audit Telemetry"
@@ -32,6 +41,6 @@ jobs:
           mkdir -p data/
           git add data/
           git diff --quiet && git diff --staged --quiet || git commit -m "chore(audit): automated daily fleet audit telemetry [skip ci]"
-          git push
+          git push origin HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

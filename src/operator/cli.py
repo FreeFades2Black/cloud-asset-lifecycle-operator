@@ -114,7 +114,10 @@ def full_dossier(
         "iam_hygiene": iam_auditor.audit_simulated_iam_posture()
     }
 
-    with open(output_file, "w", encoding="utf-8") as f:
+    out_path = Path(output_file)
+    if out_path.parent:
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
         json.dump(full_report, f, indent=2)
 
     typer.echo(f"[OK] Full Cloud Asset Lifecycle Dossier exported successfully to: {output_file}")
