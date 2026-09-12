@@ -1,29 +1,28 @@
-# ⚡ Automated Certificate & Cloud Asset Lifecycle Operator
-### *Continuous TLS Expiration Auditing, Orphaned Resource FinOps Detection & IAM Secret Hygiene*
+# Automated Certificate & Cloud Asset Lifecycle Operator
+### Continuous TLS Expiration Auditing, Orphaned Resource FinOps Detection & IAM Secret Hygiene
 
 [![Fleet Health Audit](https://github.com/FreeFades2Black/cloud-asset-lifecycle-operator/actions/workflows/scheduled_health_check.yml/badge.svg)](https://github.com/FreeFades2Black/cloud-asset-lifecycle-operator/actions/workflows/scheduled_health_check.yml)
 [![PyTest Status](https://img.shields.io/badge/PyTest-100%25%20Passed-brightgreen?style=for-the-badge&logo=pytest&logoColor=white)](https://github.com/FreeFades2Black/cloud-asset-lifecycle-operator)
-[![Target Audience](https://img.shields.io/badge/Audience-World%20Acceptance%20%7C%20TD%20SYNNEX-blue?style=for-the-badge&logo=amazonaws&logoColor=white)](https://github.com/FreeFades2Black/cloud-asset-lifecycle-operator)
 [![Packaging](https://img.shields.io/badge/Binaries-PyInstaller%20Linux%20%2F%20Windows-amber?style=for-the-badge&logo=python&logoColor=white)](https://github.com/FreeFades2Black/cloud-asset-lifecycle-operator)
 
 ---
 
-## 🎯 Executive Overview & Platform Engineering Context
+## Architecture Overview & Operational Context
 
-Enterprise infrastructure and platform engineering teams (**World Acceptance, TD SYNNEX, FinTech Cloud Platforms**) manage thousands of TLS certificates, IAM credentials, and dynamic cloud resources across multi-account AWS/Azure environments.
+Enterprise platform engineering teams manage thousands of TLS certificates, IAM credentials, and dynamic cloud resources across multi-account AWS and Azure environments.
 
-Expired certificates cause severe customer-facing outages, while unattached EBS volumes and idle Elastic IPs silently bleed thousands in unnecessary monthly cloud spend.
+Expired certificates cause customer-facing outages, while unattached EBS volumes and idle Elastic IPs silently accumulate unnecessary monthly cloud spend.
 
 The **Automated Certificate & Cloud Asset Lifecycle Operator (`cert-guard`)** provides:
 1. **Proactive TLS/SSL Certificate Auditing:** Scans ACM certificates and external DNS endpoints, grading expiration urgency (`CRITICAL <14d`, `EXPIRING_SOON <30d`, `EXPIRED`).
-2. **Orphaned Resource FinOps Discovery:** Detects unattached EBS gp3 volumes, unassociated Elastic IPs, and idle NAT gateways with automated monthly/annual financial waste calculation.
+2. **Orphaned Resource FinOps Discovery:** Detects unattached EBS gp3 volumes, unassociated Elastic IPs, and idle NAT gateways with automated monthly/annual waste calculation.
 3. **IAM Credential & Secret Hygiene:** Identifies active access keys older than 90 days, inactive users, and missing MFA.
-4. **Unified Multi-Format Reporting:** Renders Rich terminal visual tables, JSON machine payloads, and timestamped CSV executive audit dossiers.
+4. **Unified Multi-Format Reporting:** Renders terminal visual tables, JSON payloads, and timestamped CSV executive audit dossiers.
 5. **Cross-Platform Binary Distribution:** Automated PyInstaller release workflows generating standalone single-binary executables for Linux and Windows.
 
 ---
 
-## 🏛️ System Architecture & Lifecycle Operator Flow
+## System Architecture & Lifecycle Workflow
 
 ```mermaid
 flowchart TD
@@ -53,7 +52,37 @@ flowchart TD
 
 ---
 
-## 💻 CLI Commands & Usage Matrix
+## Build Verification & Concrete Test Artifacts
+
+The operator engine is verified via automated pytest execution:
+
+```text
+============================= test session starts =============================
+platform win32 -- Python 3.11.0, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\FreeF\projects\cloud-asset-lifecycle-operator
+plugins: anyio-4.14.2
+collected 3 items
+
+tests\test_operator.py ...                                               [100%]
+
+============================== 3 passed in 0.03s ==============================
+```
+
+### Verified Operational Edge Cases & Engineering Trade-Offs
+
+1. **SNI Handshake Timeouts on Internal / Firewalled Endpoints:**
+   - *Challenge:* Probing external domains behind restrictive enterprise firewalls can cause socket hangs.
+   - *Resolution:* Implemented an explicit 5.0-second socket timeout on SSL wrap calls with non-blocking DNS fallback, logging connection timeouts as `UNREACHABLE` without aborting the audit batch.
+2. **FinOps Waste Classification (Active Disks vs. Orphaned Storage):**
+   - *Challenge:* EBS gp3 volumes in `available` (unattached) status may be deliberate offline recovery artifacts or migration staging targets rather than abandoned storage.
+   - *Resolution:* The scanner inspects volume tag keys (`DoNotDelete`, `SnapshotRetain`) and creation timestamps (>14 days unattached) before escalating to the `CRITICAL_WASTE` tier.
+3. **Timezone-Aware Datetime Normalization in IAM Key Auditing:**
+   - *Challenge:* AWS Boto3 returns timezone-aware UTC timestamps for `CreateDate` on access keys, causing Python `TypeError: can't compare offset-naive and offset-aware datetimes` when calculating key age against standard `datetime.now()`.
+   - *Resolution:* Standardized all key age calculations against `datetime.now(timezone.utc)`.
+
+---
+
+## CLI Commands & Usage Reference
 
 ```bash
 # 1. Audit TLS/SSL Certificate Lifecycles
@@ -71,17 +100,17 @@ python -m src.operator.cli full-dossier --output-file=CLOUD_ASSET_LIFECYCLE_REPO
 
 ---
 
-## 🚀 2-Minute Local Sandbox Quickstart
+## Quickstart & Local Execution
 
 ```bash
-# 1. Clone the repository
+# 1. Clone repository
 git clone https://github.com/FreeFades2Black/cloud-asset-lifecycle-operator.git
 cd cloud-asset-lifecycle-operator
 
-# 2. Initialize virtual environment
+# 2. Initialize environment
 make init
 
-# 3. Run complete test suite (100% pass rate)
+# 3. Run complete test suite
 make test
 
 # 4. Run full asset lifecycle audit
@@ -90,7 +119,7 @@ make full-dossier
 
 ---
 
-## ⚖️ License & Attribution
+## License & Attribution
 
 * **License:** MIT Open Source
 * **Lead Architect:** Free (`FreeFades2Black`)
