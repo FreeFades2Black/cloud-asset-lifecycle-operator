@@ -1,0 +1,70 @@
+{
+  "title": "Cloud Asset Lifecycle & FinOps Metrics",
+  "schemaVersion": 38,
+  "panels": [
+    {
+      "title": "Identified Zombie Assets",
+      "type": "stat",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "sum(cloud_asset_zombie_count)",
+          "legendFormat": "Zombie Resources"
+        }
+      ]
+    },
+    {
+      "title": "Estimated Monthly FinOps Savings ($ USD)",
+      "type": "stat",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "sum(cloud_asset_estimated_monthly_savings_usd)",
+          "legendFormat": "Monthly Savings ($)"
+        }
+      ]
+    },
+    {
+      "title": "Cloud API Throttling Rate",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(cloud_operator_api_throttles_total[5m]))",
+          "legendFormat": "Throttled Calls/s"
+        }
+      ]
+    },
+    {
+      "title": "TLS Certificates Expiring < 30 Days",
+      "type": "gauge",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "targets": [
+        {
+          "expr": "sum(cloud_asset_expiring_tls_certificates)",
+          "legendFormat": "Expiring Certs"
+        }
+      ]
+    }
+  ]
+}

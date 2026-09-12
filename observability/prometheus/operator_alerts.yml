@@ -1,0 +1,22 @@
+groups:
+  - name: cloud_asset_operator_alerts
+    rules:
+      - alert: AssetOperatorAPIThrottling
+        expr: sum(rate(cloud_operator_api_throttles_total[5m])) > 0.5
+        for: 2m
+        labels:
+          severity: warning
+          tier: finops
+        annotations:
+          summary: "Cloud Asset Operator encountering API rate limits"
+          description: "Operator scan is encountering cloud provider 429 / ThrottlingException errors."
+
+      - alert: TLSCertificateExpiringSoon
+        expr: cloud_asset_tls_cert_days_remaining < 14
+        for: 1h
+        labels:
+          severity: critical
+          tier: security
+        annotations:
+          summary: "TLS Certificate expiring in <14 days"
+          description: "Endpoint certificate for {{ $labels.endpoint }} expires in {{ $value }} days."
