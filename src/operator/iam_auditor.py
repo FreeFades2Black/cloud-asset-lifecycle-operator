@@ -4,13 +4,13 @@ IAM Credential Hygiene & Stale Secret Auditor.
 Identifies active access keys older than 90 days, inactive users, and missing MFA.
 """
 
-from typing import Dict, List, Any
+from typing import Any
 
 
 class IAMHygieneAuditor:
     """Audits IAM access keys, root MFA compliance, and over-privileged policies."""
 
-    def audit_simulated_iam_posture(self) -> Dict[str, Any]:
+    def audit_simulated_iam_posture(self) -> dict[str, Any]:
         """Audits multi-account IAM credentials and flags compliance violations."""
         users_audited = [
             {"username": "svc-ci-deployer", "access_key_id": "AKIAIOSFODNN7EXAMPLE", "key_age_days": 142, "status": "NON_COMPLIANT_ROTATION_REQUIRED", "mfa_enabled": False, "last_used_days_ago": 1},

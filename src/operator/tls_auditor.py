@@ -4,10 +4,8 @@ TLS / SSL Certificate Lifecycle Discovery and Expiration Auditing.
 Discovers ACM certificates and domain endpoints, grading urgency and renewal requirements.
 """
 
-from datetime import datetime, timezone, timedelta
-from typing import Dict, List, Any, Optional
-import ssl
-import socket
+from datetime import datetime, timedelta, timezone
+from typing import Any
 
 
 class TLSCertificateAuditor:
@@ -18,8 +16,8 @@ class TLSCertificateAuditor:
         self.critical_threshold_days = critical_threshold_days
 
     def evaluate_certificate_dates(
-        self, domain_or_arn: str, not_after: datetime, issuer: str = "DigiCert / Let's Encrypt", sans: List[str] = None
-    ) -> Dict[str, Any]:
+        self, domain_or_arn: str, not_after: datetime, issuer: str = "DigiCert / Let's Encrypt", sans: list[str] | None = None
+    ) -> dict[str, Any]:
         """Calculates days remaining and assigns an operational lifecycle status."""
         now = datetime.now(timezone.utc)
         if not_after.tzinfo is None:
@@ -50,7 +48,7 @@ class TLSCertificateAuditor:
             "subject_alternative_names": sans or [domain_or_arn]
         }
 
-    def audit_simulated_fleet(self) -> List[Dict[str, Any]]:
+    def audit_simulated_fleet(self) -> list[dict[str, Any]]:
         """Generates a realistic enterprise certificate inventory across core domains."""
         now = datetime.now(timezone.utc)
 
