@@ -1,10 +1,10 @@
 {
-  "audit_timestamp_utc": "2026-09-25T11:16:49.216453+00:00",
+  "audit_timestamp_utc": "2026-09-26T10:53:27.326205+00:00",
   "tls_certificates": [
     {
       "resource_id": "legacy-vpn.defense.internal",
       "issuer": "Self-Signed Legacy CA",
-      "expiration_date": "2026-09-22T11:16:49.216467+00:00",
+      "expiration_date": "2026-09-23T10:53:27.326219+00:00",
       "days_remaining": -4,
       "lifecycle_status": "EXPIRED",
       "urgency_level": "CRITICAL",
@@ -15,7 +15,7 @@
     {
       "resource_id": "telemetry.bmw-spartanburg.internal",
       "issuer": "Internal Vault Enterprise CA",
-      "expiration_date": "2026-09-29T11:16:49.216467+00:00",
+      "expiration_date": "2026-09-30T10:53:27.326219+00:00",
       "days_remaining": 3,
       "lifecycle_status": "CRITICAL_ACTION_REQUIRED",
       "urgency_level": "CRITICAL",
@@ -26,7 +26,7 @@
     {
       "resource_id": "api.worldacceptance.com",
       "issuer": "Amazon ACM (Auto-Renew Failed)",
-      "expiration_date": "2026-10-03T11:16:49.216467+00:00",
+      "expiration_date": "2026-10-04T10:53:27.326219+00:00",
       "days_remaining": 7,
       "lifecycle_status": "CRITICAL_ACTION_REQUIRED",
       "urgency_level": "CRITICAL",
@@ -38,7 +38,7 @@
     {
       "resource_id": "auth.tdsynnex.com",
       "issuer": "DigiCert Global Root G2",
-      "expiration_date": "2026-10-17T11:16:49.216467+00:00",
+      "expiration_date": "2026-10-18T10:53:27.326219+00:00",
       "days_remaining": 21,
       "lifecycle_status": "EXPIRING_SOON",
       "urgency_level": "WARNING",
@@ -49,7 +49,7 @@
     {
       "resource_id": "portal.mobility.michelin.com",
       "issuer": "Let's Encrypt Authority X3",
-      "expiration_date": "2027-02-12T11:16:49.216467+00:00",
+      "expiration_date": "2027-02-13T10:53:27.326219+00:00",
       "days_remaining": 139,
       "lifecycle_status": "HEALTHY",
       "urgency_level": "LOW",
@@ -60,7 +60,7 @@
     {
       "resource_id": "scada.ge-vernova.power.net",
       "issuer": "Sectigo Enterprise SSL",
-      "expiration_date": "2027-08-11T11:16:49.216467+00:00",
+      "expiration_date": "2027-08-12T10:53:27.326219+00:00",
       "days_remaining": 319,
       "lifecycle_status": "HEALTHY",
       "urgency_level": "LOW",
